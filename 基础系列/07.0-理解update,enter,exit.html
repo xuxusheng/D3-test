@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <!-- update,enter,exit 是 d3 中三个非常重要的概念，它处理的是当选择集和数据的数量关系不确定的情况 -->
+
+    <script>
+        // 前几章里，反复出现了形如以下的代码
+/*        svg.selectAll('rect') // 选择svg内所有的矩形
+                .data(data) // 绑定数组
+                .enter() //  指定选择集的enter部分
+                .append('rect') // 添加足够数量的矩形元素*/
+
+        // http://www.ourd3js.com/wordpress/149/
+
+        // 有元素与数据相对应的部分称为：update
+        // 有元素，没有数据绑定的部分称为：exit
+        // 有数据，没有元素相对应的部分称为：enter
+
+        var dataset = [3, 6, 9, 12, 15];
+
+        var p = d3.select('body').selectAll('p');
+
+        var update = p.data(dataset)
+
+        var enter = update.enter()
+
+        update.text(function(d) {
+            return 'update' + d
+        })
+
+        enter.append('p')
+                .text(function(d) {
+                    return 'enter' + d
+                })
+
+
+    </script>
+</body>
+</html>

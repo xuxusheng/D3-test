@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+    <!-- 比例尺是 D3 中很重要的一个概念，上一章里曾经提到过直接使用数值的大小来代表像素不是一种好方法，本章正是要解决此问题 -->
+
+    <!-- D3 中的比例尺，也有值域和定义域，分别被称为 domain 和 range 。开发者需要指定 domain 和 range 的范围，如此即可得到一个计算关系 -->
+
+    <!-- 现行比例尺，能将一个连续的区间，映射到另一个区间。要解决柱形图宽度的问题，就需要线性比例尺 -->
+    <script>
+        var data = [1.2, 2.3, 0.9, 1.5, 3.3]
+
+        // 将 data 中最小的值，映射成 0，最大的值，映射成 300
+
+        var min = d3.min(data)
+        var max = d3.max(data)
+
+        // 其中，d3.scale.linear() 返回一个线性比例尺。domain()和range()分别设定比例尺的定义域和值域。
+        var linear = d3.scale.linear()
+                .domain([min, max])
+                .range([0, 300])
+    </script>
+
+    <!-- 有时候，定义域和值域不一定是连续的。-->
+    <script>
+        var index = [0, 1, 2, 3, 4]
+        var color = ['red', 'blue', 'green', 'yellow', 'black']
+
+        // 这些值都是离散的，线性比例尺并不适合，需要用到序数比例尺。
+        var ordinal = d3.scale.ordinal()
+                .domain(index)
+                .range(color)
+        ordinal(0); // 返回 red
+        ordinal(2); // 返回 green
+        ordinal(4); // 返回 black
+    </script>
+</body>
+</html>

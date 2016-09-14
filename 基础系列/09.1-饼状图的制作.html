@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<script>
+    var width = 300;
+    var height = 300;
+    var svg = d3.select('body').append('svg').attr('height', height).attr('width', width)
+
+    var data = [30, 10, 43, 55, 13]
+
+    // 布局（数据转换）
+    var pie = d3.layout.pie();
+    // 返回值赋给变量 pie，此时 pie 可以当作函数使用。
+    var pieData = pie(data) // pieData 就是转换后的数据
+
+    // 5 个整数被转换为了 5 个对象（object），每个对象都有变量 起始角度（startAngle） 和 终止角度（endAngle），还有原数据（属性名称为data）。
+
+    /* 千万记住：布局不是要直接绘图，而是为了得到绘图所需的数据 */
+
+    /* 绘制图形 */
+    // 为了根据转换后的数据 pieData 来作图，还需要一样工具：生成器。
+    // svg 有一个元素，叫做路径<path>,是SVG中功能最强的元素，它可以表示其他任意的图形。顾名思义，路径元素就是通过定义一个段‘路径’，来绘制各种图形。但是路径是很难计算的，通过布局转换后的数据 pieData 仍然很难手动计算得到路径值。为我们完成这项任务的，就是生成器。
+
+    // 这里要用到的叫做 弧生成器，能够生成弧的路径，因为饼图的每一部分都是一段弧。
+    var outerRadius = 150; // 外半径
+    var innerRadius = 20; // 内半径，为0则中间没有空白
+
+    var arc = d3.svg.arc() // 弧生成器
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius);
+
+    // 弧生成器返回的结果赋值给 arc，此时，arc 可以当作一个函数使用，把 pieData 作为参数传入，即可得到路径值。
+
+    // 为 svg 添加足够数量个 分组元素 g，每个分组用于存放一段弧的相关元素
+    var arcs = svg.selectAll('g')
+            .data(pieData)
+            .enter()
+            .append('g')
+            .attr('transform', 'translate(' + (width/2) + ',' + (width/2) + ')')
+
+    var color = d3.scale.category10(); // 有十种颜色的颜色比例尺
+
+    // 接下来对每个 <g> 元素，添加 <path>
+    arcs.append('path')
+            .attr('fill', function(d, i) {
+                return color(i)
+            })
+            .attr('d', function(d) {
+                return arc(d) // 调用弧生成器，得到路径值
+            })
+
+    // 然后在每一个弧线中心添加文本
+    arcs.append('text')
+            .attr('transform', function(d) {
+                return 'translate(' + arc.centroid(d) + ')';
+            })
+            .attr('text-anchor', 'middle')
+            .text(function(d) {
+                return d.data
+            })
+</script>
+</body>
+</html>

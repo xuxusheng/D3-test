@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<p></p>
+<script>
+    /*
+    * 如果没有足够的元素，那么处理方法通常是使用 append() 添加元素。
+    * */
+    var data = [3,6,9]
+    var p = d3.select('body').selectAll('p')
+
+    // 绑定数据后，分别获取update和enter部分
+    var update = p.data(data)
+    var enter = update.enter()
+
+    // update 部分的处理方法是直接修改内容
+    update.text(function(d) {return d})
+    // enter 部分的处理方法是添加元素后再修改内容
+    enter.append('p')
+            .text(function(d) {return d})
+</script>
+
+<script>
+    /*
+    * 有多处的元素，没有数据与之对应。对于这样的元素，通常的做法是使用 remove() 删除元素。假设body中有五个p元素
+    * */
+    var dataset = [10, 20, 30]
+    var p = d3.select('body').selectAll('p')
+
+    // 绑定数据成功后，分别获取update和exit部分
+    var update = p.data(dataset)
+    var exit = update.exit()
+
+    // update 的部分的处理方法是修改内容
+    update.text(function(d) {return d;})
+    // exit 部分的处理方法是删除
+    exit.remove()
+</script>
+
+<!-- 处理模版 -->
+<script>
+    /*
+    * 经过上两节的内容，知道了如何处理多余的数据和元素。但是，有时候我们不知道数据多，还是元素多，或者允许用户决定谁多谁少。对于事前不知道数组长度或元素数量的问题，可定义一套处理的模版。
+    * */
+    var dataset = [10, 20, 30];
+    var p = d3.select('body').selectAll('p');
+
+    // 绑定数据后，分别返回update、enter、exit部分
+    var update = p.data(dataset)
+    var enter = update.enter()
+    var exit = update.exit()
+
+    // 1. update 部分的处理方法
+    update.text(function(d) {return d})
+
+    // 2. enter 部分的处理方法
+    enter.append('p')
+            .text(function(d) {return d})
+
+    // 3. exit 部分的处理方法
+    exit.remove()
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

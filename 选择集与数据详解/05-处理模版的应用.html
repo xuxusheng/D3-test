@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>处理模版的应用</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<button onclick="mySort()">sort</button>
+<button onclick="myAdd()">add</button>
+
+<!-- 上文介绍了update、enter、exit的处理模版，这个模版很常用，本文将通过一个例子来讲解其使用方法 -->
+
+<script>
+    /* 应用模版的场合：当数据需要更新（添加、删除、变更）的时候，要想起此模版 */
+
+    // 下面制作一个柱形图，用于理解更新数据与使用该模版的好处。
+    // 柱形图的数据有时候需要更新，更新以后柱形图也需要跟着变化。例如将数据排序、增加新的数据等，都需要柱形图跟着变化。
+    // 在这里只绘制柱形图的矩形和文字，不绘制坐标轴，然后再添加两个按钮，用于更新数据。将绘制图形的代码写在一个函数draw()里，当数据发生更新时，再次调用此函数即可。
+
+    var dataset = [50, 43, 120, 87, 99, 167, 142];
+    var width = 800 // svg 绘制区域的宽度
+    var height = 800 // svg 绘制区域的高度
+
+    var svg = d3.select('body') // 选择 body
+            .append('svg') // 添加 svg 标签
+            .attr('width', width)
+            .attr('height', height)
+
+    // 外边框
+    var padding = {top: 20, right: 20, bottom: 20, left: 20}
+    // 矩形所占的宽度（包括空白），单位为像素
+    var rectStep = 35;
+    // 矩形所占的宽度（不包括空白），单位为像素
+    var rectWidth = 30;
+
+    function draw() {
+        // 获取矩形的 update 部分
+        var updateRect = svg.selectAll('rect')
+                .data(dataset);
+        // 获取矩形的 enter 部分
+        var enterRect = updateRect.enter()
+        // 获取矩形的 exit 部分
+        var exitRect = updateRect.exit();
+
+        // 1. 矩形的 update 部分的处理方法
+        updateRect.attr('fill', 'steelblue')
+                .attr('x', function(d, i) {
+                    return padding.left + i * rectStep
+                })
+                .attr("y", function(d){		//设置矩形的y坐标
+                    return height- padding.bottom - d;
+                })
+                .attr('width', rectWidth)
+                .attr('height', function(d) {return d})
+        // 2. 矩形的 enter 部分的处理方法
+        enterRect.append('rect')
+                .attr('fill', 'steelblue')
+                .attr('x', function(d, i) {
+                    return padding.left + i * rectStep
+                })
+                .attr("y", function(d){		//设置矩形的y坐标
+                    return height- padding.bottom - d;
+                })
+                .attr("width",rectWidth)		//设置矩形的宽度
+                .attr("height",function(d){	//设置矩形的高度
+                    return d;
+                });
+        // 3. 矩形的 exit 部分的处理方法
+        exitRect.remove()
+
+        // 获取文字部分的 update
+        var updateText = svg.selectAll('text')
+                .data(dataset)
+        var enterText = updateText.enter()
+        var exitText = updateText.exit()
+
+        updateText.attr('fill', 'white')
+                .attr('font-size', '14px')
+                .attr('text-anchor', 'middle')
+                .attr('x', function(d, i) {
+                    return padding.left + i * rectStep
+                })
+                .attr('y', function(d) {
+                    return height - padding.bottom - d;
+                })
+                .attr('dx', rectWidth/2)
+                .attr('dy', '1em')
+                .text(function(d) {return d})
+        enterText.append('text')
+                .attr('fill', 'white')
+                .attr('font-size', '14px')
+                .attr('text-anchor', 'middle')
+                .attr('x', function(d, i) {
+                    return padding.left + i * rectStep
+                })
+                .attr('y', function(d) {
+                    return height - padding.bottom - d
+                })
+                .attr('dx', rectWidth/2)
+                .attr('dy', '1em')
+                .text(function(d) {return d})
+        exitText.remove()
+    }
+
+    draw();
+
+    function mySort() {
+        dataset.sort(d3.ascending);
+        draw()
+    }
+
+    function myAdd() {
+        dataset.push(Math.floor(Math.random() * 100));
+        draw()
+    }
+
+</script>
+</body>
+</html>

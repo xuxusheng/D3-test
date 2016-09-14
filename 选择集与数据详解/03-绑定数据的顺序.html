@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<script>
+    /*
+     * data() 函数有两个参数，第一个是被绑定数据，第二个参数用于指定绑定的顺序。在数据需要更新的时候常常会用到。
+     *
+     * 默认的情况下，data（）函数是按照索引号依次绑定数组各项的。第0个元素绑定数组的第0项，第1个元素绑定数组的第1项，依次类推。
+     *
+     * 也可以不按照此顺序进行绑定，这就要用到data（）的第二个参数。这个参数是一个函数，称为键函数（key function）
+     *
+     * */
+</script>
+<!-- 三个空的 p 元素 -->
+<p></p>
+<p></p>
+<p></p>
+<script>
+    // 数据
+    var person = [{id: 3, name: 'zhangsan'},{id: 6, name: 'lisi'}, {id: 9, name: 'wangwu'}]
+    // 选择body中的所有p元素
+    var p = d3.select('body').selectAll('p')
+    // 绑定数据，并修改p元素的内容
+    p.data(person)
+            .text(function(d) {
+                return d.id + ':' + d.name
+            })
+
+    /* 下面将person里的数据更新，再绑定一次数据。本次绑定添加键函数 */
+    persons = [{id: 6, name:'xusheng'}, {id: 9, name:'xu'}, {id: 3, name:'sheng'}]
+    // 根据键函数的规则绑定数据，并修改内容
+    p.data(person, function(d) {return d.id;})
+            .text(function(d) {
+                return d.id + ':' + d.name
+            })
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.1</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+<p>Apple</p>
+<p id="myId">Pear</p>
+<p>Banana</p>
+<script>
+    var body = d3.select("body")
+    var p = body.selectAll('p')
+    p.style('color', 'red')
+
+    // append 往元素 末尾 添加一个元素
+    body.append('p').text('append p element')
+
+    // insert 在元素前添加一个段落元素
+    body.insert('p', '#myId').text('insert p element')
+
+    // 使用 remove() 方法删除元素
+    p.remove()
+</script>
+</body>
+</html>

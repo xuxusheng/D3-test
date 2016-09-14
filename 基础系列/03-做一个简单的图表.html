@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+
+<script>
+    // 画布的宽度
+    var width = 300;
+    // 画布的高度
+    var height = 300;
+
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height)
+
+    // 在 svg 中，矩形的元素标签是 rect。
+    // 在 svg 中，x 轴的正方向是水平向右，y 轴的正方向是垂直向下。
+    var dataSet = [250, 210, 170, 130, 90]; // 数据，表示矩形
+
+    // 每个矩形所占的像素高度（包括空白）
+    var rectHeight = 25;
+    svg.selectAll('rect') // 选择 svg 内所有的矩形
+            .data(dataSet) // 绑定数组
+            .enter() // 指定选择集的 enter 部分
+            .append('rect') // 添加足够数量的矩形元素
+            .attr('x', 20)
+            .attr('y', function(d, i) {
+                return i * rectHeight;
+            })
+            .attr('width', function(d) {
+                return d
+            })
+            .attr('height', rectHeight - 2)
+            .attr('fill', 'steelblue')
+</script>
+</body>
+</html>

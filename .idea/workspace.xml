@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5290e5e9-cff4-4854-ba27-373cd240419a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/D3-API-详解/树状布局/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gogogo.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/高级系列/10.0-思维导图.html" afterPath="$PROJECT_DIR$/高级系列/10.0-思维导图.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gogogo.html" afterPath="$PROJECT_DIR$/gogogo.html" />
     </list>
     <ignored path="D3-test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,8 +31,8 @@
           <file leaf-file-name="gogogo.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/gogogo.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="354">
-                  <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+                <state relative-caret-position="384">
+                  <caret line="91" column="29" selection-start-line="91" selection-start-column="29" selection-end-line="91" selection-end-column="29" />
                   <folding />
                 </state>
               </provider>
@@ -282,12 +280,20 @@
       <workItem from="1473756086931" duration="3996000" />
       <workItem from="1473827049939" duration="6642000" />
       <workItem from="1474114773215" duration="106000" />
-      <workItem from="1474114889297" duration="8980000" />
+      <workItem from="1474114889297" duration="9709000" />
     </task>
+    <task id="LOCAL-00001" summary="some change">
+      <created>1474126996561</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1474126996561</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59567000" />
+    <option name="totallyTimeSpent" value="60296000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -341,6 +347,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="some change" />
+    <option name="LAST_COMMIT_MESSAGE" value="some change" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -686,8 +696,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gogogo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+        <state relative-caret-position="384">
+          <caret line="91" column="29" selection-start-line="91" selection-start-column="29" selection-end-line="91" selection-end-column="29" />
           <folding />
         </state>
       </provider>

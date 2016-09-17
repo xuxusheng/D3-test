@@ -82,11 +82,15 @@
 
     var svg = d3.select('body')
             .append('svg').attr('width', width + padding.left + padding.right).attr('height', height + padding.top + padding.bottom)
-            .append('g')
+            .append('g').attr('transform', function (d) {
+                return 'translate(0,' + (height + padding.top + padding.bottom) / 2 + ')'
+            })
 
     // 树状图布局
     var tree = d3.layout.tree()
             .size([height, width])
+            // 调整节点大小，【高度，宽度】
+            .nodeSize([45, 220])
     // 对角线生成器
     var diagonal = d3.svg.diagonal()
             .projection(function (d) {

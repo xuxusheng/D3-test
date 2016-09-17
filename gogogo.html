@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style>
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+
+        .d3-radio circle {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 1.5px;
+            r: 8px;
+        }
+
+        .d3-checkbox rect {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 1px;
+            width: 16px;
+            height: 16px;
+            transform: translate(-8px, -8px);
+        }
+
+        .d3-input rect {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 1px;
+            width: 50px;
+            height: 20px;
+            transform: translate(-25px, -10px)
+        }
+    </style>
+</head>
+<body>
+<script>
+    var width = 600;
+    var height = 500;
+    var data = {
+        value: 1,
+        children: [{
+            value: 1,
+            class: 'd3-input',
+            children: [{
+                value: 2,
+                class: 'd3-input'
+            }, {
+                value: 2,
+                class: 'd3-checkbox'
+            }]
+        }, {
+            value: 2,
+            class: 'd3-radio',
+            children: [{
+                value: 3,
+                class: 'd3-checkbox',
+                children: [{
+                    value: 3,
+                    class: 'd3-radio'
+                }, {
+                    value: 1,
+                }]
+            }, {
+                value: 2,
+                children: [{
+                    value: 2,
+                }, {
+                    value: 3,
+                    class: 'd3-input'
+                }]
+            }]
+        }]
+    }
+
+    // 边界空白
+    var padding = {left: 80, right: 50, top: 20, bottom: 20}
+
+    var svg = d3.select('body')
+            .append('svg').attr('width', width + padding.left + padding.right).attr('height', height + padding.top + padding.bottom)
+            .append('g')
+
+    // 树状图布局
+    var tree = d3.layout.tree()
+            .size([height, width])
+    // 对角线生成器
+    var diagonal = d3.svg.diagonal()
+            .projection(function (d) {
+                return [d.y, d.x]
+            })
+
+    redraw(data)
+
+    function redraw(data) {
+        var nodes = tree.nodes(data)
+        var links = tree.links(nodes)
+
+        var linkUpdate = svg.selectAll('.link')
+                .data(links)
+        var linkEnter = linkUpdate.enter()
+        var linkExit = linkUpdate.exit()
+
+        linkEnter.insert('path', '.node')
+                .attr('class', 'link')
+                .attr('d', diagonal)
+        linkUpdate.attr('d', diagonal)
+        linkExit.remove()
+
+        // 节点的处理
+        var nodeUpdate = svg.selectAll('.node')
+                .data(nodes)
+        var nodeEnter = nodeUpdate.enter()
+        var nodeExit = nodeUpdate.exit()
+
+        nodeEnter.append('g')
+                .attr('class', function (d) {
+                    if (d.active) {
+                        return d.class + ' node active'
+                    } else {
+                        return d.class + ' node'
+                    }
+                })
+                .attr('transform', function (d) {
+                    return 'translate(' + d.y + ',' + d.x + ')'
+                })
+                .on('click', function(d) {
+                    d.active = !d.active
+                    redraw(data)
+                })
+        nodeUpdate.attr('class', function (d) {
+            return d.class + ' node'
+        })
+                .attr('transform', function (d) {
+                    return 'translate(' + d.y + ',' + d.x + ')'
+                })
+        nodeExit.remove()
+
+        d3.selectAll('.d3-input').append('rect')
+        d3.selectAll('.d3-checkbox').append('rect')
+        d3.selectAll('.d3-radio').append('circle')
+
+    }
+</script>
+</body>
+</html>
